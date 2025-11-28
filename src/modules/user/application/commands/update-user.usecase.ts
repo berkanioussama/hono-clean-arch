@@ -1,5 +1,6 @@
-import { UserRepository } from "../../../domain/repositories/user-repository";
-import { UpdateUserInputDTO, UpdateUserOutputDTO } from "../dto/update-user-DTO";
+import { UserRepository } from "../../domain/user.repository";
+import { UpdateUserInputDTO, UpdateUserOutputDTO } from "../dto/update-user.dto";
+import { UserMapper } from "../mappers/user.mapper";
 
 export class UpdateUserUseCase {
   constructor(private userRepository: UserRepository) {}
@@ -13,14 +14,8 @@ export class UpdateUserUseCase {
     if (input.email) user.changeEmail(input.email);
     console.log(user)
 
-    const updatedUser = await this.userRepository.update(user);
+    const updatedUser = await this.userRepository.update(user); 
 
-    return {
-      id: updatedUser.id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      createdAt: updatedUser.createdAt.toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    return UserMapper.toDTO(updatedUser);
   }
 }

@@ -1,5 +1,5 @@
-import { UserRepository } from "../../../domain/repositories/user-repository";
-import { DeleteUserInputDTO, DeleteUserOutputDTO } from "../dto/delete-user-DTO";
+import { UserRepository } from "../../domain/user.repository";
+import { DeleteUserInputDTO, DeleteUserOutputDTO } from "../dto/delete-user.dto";
 
 export class DeleteUserUseCase {
   constructor(private userRepository: UserRepository) {}

@@ -1,14 +1,15 @@
-import { User } from "../../domain/entities/user";
-import { UserRepository } from "../../domain/repositories/user-repository";
-import { db } from "../database/db";
-import { users } from "../database/schema";
+import { User } from "../domain/user.entity";
+import { UserRepository } from "../domain/user.repository";
+import { db } from "../../../shared/infrastructure/database/db";
+import { users } from "../../../shared/infrastructure/database/schema";
 import { eq } from "drizzle-orm";
 
-export class UserRepositoryImpl implements UserRepository {
+export class UserRepositoryDrizzle implements UserRepository {
     
     async create(user: User): Promise<User> {
         await db.insert(users).values({
             id: user.id,
+            clerk_user_id: user.clerkUserId,
             name: user.name,
             email: user.email,
             created_at: user.createdAt,
@@ -24,6 +25,7 @@ export class UserRepositoryImpl implements UserRepository {
 
         return new User({
             id: findedUser.id,
+            clerkUserId: findedUser.clerk_user_id,
             name: findedUser.name,
             email: findedUser.email,
             createdAt: new Date(findedUser.created_at),
@@ -38,6 +40,22 @@ export class UserRepositoryImpl implements UserRepository {
 
         return new User({
             id: findedUser.id,
+            clerkUserId: findedUser.clerk_user_id,
+            name: findedUser.name,
+            email: findedUser.email,
+            createdAt: new Date(findedUser.created_at),
+            updatedAt: new Date(findedUser.updated_at),
+        });
+    }
+
+    async findByClerkUserId(clerkUserId: string): Promise<User | null> {
+        const row = await db.select().from(users).where(eq(users.clerk_user_id, clerkUserId)).limit(1);
+        if (row.length === 0) return null;
+        const findedUser = row[0];
+
+        return new User({
+            id: findedUser.id,
+            clerkUserId: findedUser.clerk_user_id,
             name: findedUser.name,
             email: findedUser.email,
             createdAt: new Date(findedUser.created_at),
@@ -51,6 +69,7 @@ export class UserRepositoryImpl implements UserRepository {
             row =>
                 new User({
                     id: row.id,
+                    clerkUserId: row.clerk_user_id,
                     name: row.name,
                     email: row.email,
                     createdAt: new Date(row.created_at),

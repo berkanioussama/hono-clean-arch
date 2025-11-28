@@ -6,6 +6,7 @@ export interface UpdateUserInputDTO {
 
 export interface UpdateUserOutputDTO {
   id: string;
+  clerkUserId: string;
   name: string;
   email: string;
   createdAt: string;
