@@ -10,5 +10,5 @@ Tech stack
 - Drizzle
 - Neon (PostgreSQL)
 - Clerk
+- svix
 - Zod
-

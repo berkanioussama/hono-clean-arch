@@ -6,18 +6,23 @@ import { secureHeaders } from "hono/secure-headers";
 import { limiter } from "./shared/api/middlewares/rate-limiter";
 import { compress } from '@hono/bun-compress'
 import { requireAuth } from "./shared/api/middlewares/clerk-require-auth"
+import clerkWebhook from "./modules/user/api/webhooks/users.webhook"
 
 const app = new Hono();
 
 app.use(secureHeaders())
 app.use(logger())
+app.use(compress())
+
+app.route('/api/v1/webhook/clerk', clerkWebhook);
+
 app.use("*", clerkMiddleware())
 app.use("*", requireAuth())
 app.use("*", limiter)
-app.use(compress())
 
 app.route("/api/v1/users", userRoutes);
 
 app.get("/", (c) => c.json({ message: "API is running..." }))
+app.notFound((c) => { return c.json({ message: 'No route found' }, 404) })
 
 export default app;

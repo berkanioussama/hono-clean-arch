@@ -25,12 +25,15 @@ src/
         -user.repository.ts
       -infrastructure/
         -user-repository-drizzle.ts
+    -other module
   -shared/
     -api/
       -middlewares/
         -clerk-require-auth.ts
         -rate-limiter.ts
       -utils/
+      -webhooks
+        -use.webhook.ts
     -infrastructure/
       -database/
         -db.ts
