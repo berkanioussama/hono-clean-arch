@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { Webhook } from 'svix';
 import { UserRepository } from '../../infrastructure/user.repository';
-import { CreateUserByClerkUseCase } from '../../application/commands/create-user-by-AuthPrivider.usecase';
-import { DeleteUserByClerkUseCase } from '../../application/commands/delete-user-by-AuthProvider.usecase';
+import { CreateUserByAuthProviderIdUseCase } from '../../application/commands/create-user-by-AuthPrivider.usecase';
+import { DeleteUserByAuthProviderIdUseCase } from '../../application/commands/delete-user-by-AuthProvider.usecase';
 
 type ClerkWebhookEvent = {
     type: string;
@@ -17,8 +17,8 @@ const webhook = new Webhook(process.env.CLERK_WEBHOOK_SIGNING_SECRET || '');
 const clerkWebhook = new Hono();
 
 const userRepository = new UserRepository();
-const createUserByClerkUseCase = new CreateUserByClerkUseCase(userRepository);
-const deleteUserByClerkUseCase = new DeleteUserByClerkUseCase(userRepository);
+const createUserByAuthProviderIdUseCase = new CreateUserByAuthProviderIdUseCase(userRepository);
+const deleteUserByAuthProviderIdUseCase = new DeleteUserByAuthProviderIdUseCase(userRepository);
 
 clerkWebhook.post('/', async (c) => {
   try {
@@ -46,13 +46,13 @@ clerkWebhook.post('/', async (c) => {
       
       // Process the event
       if (event.type === 'user.created' || event.type === 'user.updated') {
-        await createUserByClerkUseCase.execute({
-          clerkUserId: event.data.id,
+        await createUserByAuthProviderIdUseCase.execute({
+          authProviderId: event.data.id,
           name: `${event.data.first_name || ''} ${event.data.last_name || ''}`.trim(),
           email: event.data.email_addresses?.[0]?.email_address,
         });
       } else if (event.type === 'user.deleted') {
-        await deleteUserByClerkUseCase.execute({clerkUserId: event.data.id});
+        await deleteUserByAuthProviderIdUseCase.execute({authProviderId: event.data.id});
       }
 
       return c.text('Webhook processed successfully', 200);

@@ -8,11 +8,11 @@ import { ApiResponse } from "../../../shared/api/utils/api-response";
 
 export class UserController {
     constructor(
-        private createUserUseCase: CreateUserUseCase,
+        private createUserUseCase : CreateUserUseCase,
         private getAllUsersUseCase: GetAllUsersUseCase,
         private getUserByIdUseCase: GetUserByIdUseCase,
-        private updateUserUseCase: UpdateUserUseCase,
-        private deleteUserUseCase: DeleteUserUseCase
+        private updateUserUseCase : UpdateUserUseCase,
+        private deleteUserUseCase : DeleteUserUseCase
     ) {}
 
     async createUser(c: Context) {
