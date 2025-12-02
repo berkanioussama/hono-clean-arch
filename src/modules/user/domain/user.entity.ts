@@ -1,6 +1,6 @@
 export interface UserProps {
   id: string;
-  clerkUserId: string;
+  authProviderId: string;
   name: string;
   email: string;
   createdAt: Date;
@@ -29,7 +29,7 @@ export class User {
   }
 
   get id() { return this.props.id }
-  get clerkUserId() { return this.props.clerkUserId }
+  get authProviderId() { return this.props.authProviderId }
   get name() { return this.props.name }
   get email() { return this.props.email }
   get createdAt() { return this.props.createdAt }

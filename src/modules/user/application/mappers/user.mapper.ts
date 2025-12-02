@@ -1,11 +1,11 @@
 import { User } from "../../domain/user.entity";
-import { GetUserOutputDTO } from "../dto/get-user.dto";
+import { UserOutputDTO } from "../dto/user-output.dto";
 
 export class UserMapper {
-  static toDTO(user: User): GetUserOutputDTO {
+  static toDTO(user: User): UserOutputDTO {
     return {
       id: user.id,
-      clerkUserId: user.clerkUserId,
+      authProviderId: user.authProviderId,
       name: user.name,
       email: user.email,
       createdAt: user.createdAt.toISOString(),

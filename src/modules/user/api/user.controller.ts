@@ -19,7 +19,7 @@ export class UserController {
         try {
             const auth = c.get("auth");
             const data = c.req.valid('json')
-            const user = await this.createUserUseCase.execute({clerkUserId: auth.userId, ...data})
+            const user = await this.createUserUseCase.execute({authProviderId: auth.userId, ...data})
             return c.json(ApiResponse(user), 201)
         } catch (error) {
             return c.json(ApiResponse("error creating user"), 400)
@@ -39,7 +39,7 @@ export class UserController {
         try {
             const auth = c.get("auth");
             const id = c.req.param("id");
-            const user = await this.getUserByIdUseCase.execute({ id, clerkUserId: auth.userId })
+            const user = await this.getUserByIdUseCase.execute({ id, authProviderId: auth.userId })
             return c.json(ApiResponse(user))
         } catch (error) {
             return c.json(ApiResponse("error getting user"), 400)
@@ -51,7 +51,7 @@ export class UserController {
             const auth = c.get("auth");
             const id = c.req.param("id");
             const body = c.req.valid('json')
-            const user = await this.updateUserUseCase.execute({id, clerkUserId: auth.userId, ...body})
+            const user = await this.updateUserUseCase.execute({id, authProviderId: auth.userId, ...body})
             return c.json(ApiResponse(user))
         } catch (error) {
             return c.json(ApiResponse("error updating user"), 400)

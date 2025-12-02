@@ -9,7 +9,7 @@ export class UserRepository implements IUserRepository {
     async add(user: User): Promise<User> {
         await db.insert(users).values({
             id: user.id,
-            clerk_user_id: user.clerkUserId,
+            auth_provider_id: user.authProviderId,
             name: user.name,
             email: user.email,
             created_at: user.createdAt,
@@ -25,7 +25,7 @@ export class UserRepository implements IUserRepository {
 
         return new User({
             id: findedUser.id,
-            clerkUserId: findedUser.clerk_user_id,
+            authProviderId: findedUser.auth_provider_id,
             name: findedUser.name,
             email: findedUser.email,
             createdAt: new Date(findedUser.created_at),
@@ -40,7 +40,7 @@ export class UserRepository implements IUserRepository {
 
         return new User({
             id: findedUser.id,
-            clerkUserId: findedUser.clerk_user_id,
+            authProviderId: findedUser.auth_provider_id,
             name: findedUser.name,
             email: findedUser.email,
             createdAt: new Date(findedUser.created_at),
@@ -48,14 +48,14 @@ export class UserRepository implements IUserRepository {
         });
     }
 
-    async findByClerkUserId(clerkUserId: string): Promise<User | null> {
-        const row = await db.select().from(users).where(eq(users.clerk_user_id, clerkUserId)).limit(1);
+    async findByAuthProviderId(authProviderId: string): Promise<User | null> {
+        const row = await db.select().from(users).where(eq(users.auth_provider_id, authProviderId)).limit(1);
         if (row.length === 0) return null;
         const findedUser = row[0];
 
         return new User({
             id: findedUser.id,
-            clerkUserId: findedUser.clerk_user_id,
+            authProviderId: findedUser.auth_provider_id,
             name: findedUser.name,
             email: findedUser.email,
             createdAt: new Date(findedUser.created_at),
@@ -69,7 +69,7 @@ export class UserRepository implements IUserRepository {
             row =>
                 new User({
                     id: row.id,
-                    clerkUserId: row.clerk_user_id,
+                    authProviderId: row.auth_provider_id,
                     name: row.name,
                     email: row.email,
                     createdAt: new Date(row.created_at),

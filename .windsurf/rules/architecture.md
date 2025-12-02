@@ -41,4 +41,5 @@ src/
         -schema.ts
 app.ts
 index.ts
+.env
 drizzle.config.ts

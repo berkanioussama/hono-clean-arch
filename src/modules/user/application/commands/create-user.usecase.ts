@@ -19,7 +19,7 @@ export class CreateUserUseCase {
 
     const user = new User({
       id: crypto.randomUUID(),
-      clerkUserId: input.clerkUserId,
+      authProviderId: input.authProviderId,
       name: input.name,
       email: input.email,
       createdAt: new Date(),

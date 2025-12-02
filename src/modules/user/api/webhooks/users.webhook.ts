@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { Webhook } from 'svix';
 import { UserRepository } from '../../infrastructure/user.repository';
-import { CreateUserByClerkUseCase } from '../../application/commands/create-user-by-clerk.usecase';
-import { DeleteUserByClerkUseCase } from '../../application/commands/delete-user-by-clerk.usecase';
+import { CreateUserByClerkUseCase } from '../../application/commands/create-user-by-AuthPrivider.usecase';
+import { DeleteUserByClerkUseCase } from '../../application/commands/delete-user-by-AuthProvider.usecase';
 
 type ClerkWebhookEvent = {
     type: string;

@@ -14,7 +14,7 @@ export class GetUserByIdUseCase {
     const user = await this.userRepository.findById(input.id);
 
     if (!user) return null;
-    if (user.clerkUserId !== input.clerkUserId) {
+    if (user.authProviderId !== input.authProviderId) {
         throw new Error("Unauthorized");
     }
 

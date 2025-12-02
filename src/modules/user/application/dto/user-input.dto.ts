@@ -1,12 +1,17 @@
 export interface CreateUserInputDTO {
-  clerkUserId: string;
+  authProviderId: string;
   name: string;
   email: string;
 }
 
 export interface GetUserInputDTO {
   id: string;
-  clerkUserId: string;
+  authProviderId: string;
+}
+
+export interface GetUserByEmailInputDTO {
+  email: string;
+  authProviderId: string;
 }
 
 export interface UpdateUserInputDTO {
@@ -19,6 +24,6 @@ export interface DeleteUserInputDTO {
   id: string;
 }
 
-export interface DeleteUserByClerkInputDTO {
-  clerkUserId: string;
+export interface DeleteUserByAuthProviderIdInputDTO {
+  authProviderId: string;
 }
