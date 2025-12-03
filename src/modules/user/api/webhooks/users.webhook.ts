@@ -5,11 +5,11 @@ import { CreateUserByAuthProviderIdUseCase } from '../../application/commands/cr
 import { DeleteUserByAuthProviderIdUseCase } from '../../application/commands/delete-user-by-AuthProvider.usecase';
 
 type ClerkWebhookEvent = {
-    type: string;
-    data: {
-      id: string;
-      [key: string]: any;
-    };
+  type: string;
+  data: {
+    id: string;
+    [key: string]: any;
+  };
 };
 
 const webhook = new Webhook(process.env.CLERK_WEBHOOK_SIGNING_SECRET || '');

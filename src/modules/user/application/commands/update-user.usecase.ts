@@ -7,13 +7,13 @@ export class UpdateUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(input: UpdateUserInputDTO): Promise<UserOutputDTO> {
-    console.log(input)
+    
     const user = await this.userRepository.findById(input.id);
     if (!user) throw new Error("User not found");
-    console.log(user)
+    
     if (input.name) user.changeName(input.name);
     if (input.email) user.changeEmail(input.email);
-    console.log(user)
+    user.changeUpdatedAt(new Date());
 
     const updatedUser = await this.userRepository.edit(user); 
 

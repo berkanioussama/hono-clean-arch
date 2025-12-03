@@ -28,6 +28,10 @@ export class User {
     this.props.email = newEmail.trim()
   }
 
+  changeUpdatedAt(newUpdatedAt: Date) {
+    this.props.updatedAt = newUpdatedAt
+  }
+
   get id() { return this.props.id }
   get authProviderId() { return this.props.authProviderId }
   get name() { return this.props.name }

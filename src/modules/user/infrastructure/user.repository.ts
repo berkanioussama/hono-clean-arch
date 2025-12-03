@@ -3,88 +3,60 @@ import { IUserRepository } from "../domain/IUser.repository";
 import { db } from "../../../shared/infrastructure/database/db";
 import { users } from "../../../shared/infrastructure/database/schema";
 import { eq } from "drizzle-orm";
+import { UserMapper } from "./user.mapper";
 
 export class UserRepository implements IUserRepository {
     
     async add(user: User): Promise<User> {
-        await db.insert(users).values({
+        const insertedUser = await db.insert(users).values({
             id: user.id,
             auth_provider_id: user.authProviderId,
             name: user.name,
             email: user.email,
             created_at: user.createdAt,
             updated_at: user.updatedAt,
-        });
-    return user;
+        }).returning();
+
+        return UserMapper.toDomain(insertedUser[0]);
     }
     
     async findById(id: string): Promise<User | null> {
-        const row = await db.select().from(users).where(eq(users.id, id)).limit(1);
-        if (row.length === 0) return null;
-        const findedUser = row[0];
+        const findedUser = await db.select().from(users).where(eq(users.id, id)).limit(1);
+        if (findedUser.length === 0) return null
 
-        return new User({
-            id: findedUser.id,
-            authProviderId: findedUser.auth_provider_id,
-            name: findedUser.name,
-            email: findedUser.email,
-            createdAt: new Date(findedUser.created_at),
-            updatedAt: new Date(findedUser.updated_at),
-        });
+        return UserMapper.toDomain(findedUser[0])
     }
     
     async findByEmail(email: string): Promise<User | null> {
-        const row = await db.select().from(users).where(eq(users.email, email)).limit(1);
-        if (row.length === 0) return null;
-        const findedUser = row[0];
+        const findedUser = await db.select().from(users).where(eq(users.email, email)).limit(1);
+        if (findedUser.length === 0) return null
 
-        return new User({
-            id: findedUser.id,
-            authProviderId: findedUser.auth_provider_id,
-            name: findedUser.name,
-            email: findedUser.email,
-            createdAt: new Date(findedUser.created_at),
-            updatedAt: new Date(findedUser.updated_at),
-        });
+        return UserMapper.toDomain(findedUser[0])
     }
 
     async findByAuthProviderId(authProviderId: string): Promise<User | null> {
-        const row = await db.select().from(users).where(eq(users.auth_provider_id, authProviderId)).limit(1);
-        if (row.length === 0) return null;
-        const findedUser = row[0];
+        const findedUser = await db.select().from(users).where(eq(users.auth_provider_id, authProviderId)).limit(1);
+        if (findedUser.length === 0) return null
 
-        return new User({
-            id: findedUser.id,
-            authProviderId: findedUser.auth_provider_id,
-            name: findedUser.name,
-            email: findedUser.email,
-            createdAt: new Date(findedUser.created_at),
-            updatedAt: new Date(findedUser.updated_at),
-        });
+        return UserMapper.toDomain(findedUser[0])
     }
     
     async findAll(): Promise<User[]> {
-        const rows = await db.select().from(users)
-        return rows.map(
-            row =>
-                new User({
-                    id: row.id,
-                    authProviderId: row.auth_provider_id,
-                    name: row.name,
-                    email: row.email,
-                    createdAt: new Date(row.created_at),
-                    updatedAt: new Date(row.updated_at),
-                })
-            );
+        const findedUsers = await db.select().from(users)
+        return findedUsers.map(
+            findedUser =>
+                UserMapper.toDomain(findedUser)
+        )
     }
     
     async edit(user: User): Promise<User> {
-        await db.update(users).set({
+        const updatedUser = await db.update(users).set({
             name: user.name,
             email: user.email,
             updated_at: user.updatedAt,
-        }).where(eq(users.id, user.id));
-        return user;
+        }).where(eq(users.id, user.id)).returning();
+        
+        return UserMapper.toDomain(updatedUser[0]);
     }
 
     async remove(id: string): Promise<void> {
