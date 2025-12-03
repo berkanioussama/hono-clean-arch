@@ -12,20 +12,27 @@ src/
   -modules/
     -user/
       -api/
-        -webhook
+        -webhook/
+          -use.webhook.ts
         -user.controller.ts
         -user.validator.ts
         -user.routes.ts
       -application/
-        -commands
-        -queries
-        -dto
-        -mappers
+        -commands/
+          -create-user.usecase.ts
+        -query/
+          -get-user-by-id.usecase.ts
+        -dto/
+          -user-input.dto.ts
+          -user-output.dto.ts
+        -mapper/
+          -user.mapper.ts
       -domain/
         -user.entity.ts
-        -user.repository.ts
+        -IUser.repository.ts
       -infrastructure/
-        -user-repository-drizzle.ts
+        -user-mapper.ts
+        -user-repository.ts
     -other module
   -shared/
     -api/
@@ -33,8 +40,7 @@ src/
         -clerk-require-auth.ts
         -rate-limiter.ts
       -utils/
-      -webhooks
-        -use.webhook.ts
+        -api-response.ts
     -infrastructure/
       -database/
         -db.ts
