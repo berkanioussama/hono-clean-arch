@@ -1,8 +1,7 @@
-import { User } from "../../domain/user.entity";
-import { IUserRepository } from "../../domain/IUser.repository";
-import { CreateUserInputDTO } from "../dto/user-input.dto";
-import { UserMapper } from "../mapper/user.mapper";
-import { UserOutputDTO } from "../dto/user-output.dto";
+import { User } from "../../domain/user.entity"
+import { IUserRepository } from "../../domain/IUser.repository"
+import { CreateUserInputDTO } from "../dto/user-input.dto"
+import { UserOutputDTO } from "../dto/user-output.dto"
 
 export class CreateUserByAuthProviderIdUseCase {
   constructor(private userRepository: IUserRepository) {}
@@ -32,6 +31,7 @@ export class CreateUserByAuthProviderIdUseCase {
     });
 
     const createdUser = await this.userRepository.add(user)
-    return UserMapper.toDTO(createdUser)
+
+    return createdUser.toJSON()
   }
 }

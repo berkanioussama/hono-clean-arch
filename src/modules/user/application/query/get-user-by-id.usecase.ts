@@ -1,7 +1,6 @@
-import { IUserRepository } from "../../domain/IUser.repository";
-import { UserMapper } from "../mapper/user.mapper";
-import { UserOutputDTO } from "../dto/user-output.dto";
-import { GetUserInputDTO } from "../dto/user-input.dto";
+import { IUserRepository } from "../../domain/IUser.repository"
+import { UserOutputDTO } from "../dto/user-output.dto"
+import { GetUserInputDTO } from "../dto/user-input.dto"
 
 export class GetUserByIdUseCase {
   constructor(private userRepository: IUserRepository) {}
@@ -18,6 +17,6 @@ export class GetUserByIdUseCase {
         throw new Error("Unauthorized");
     }
 
-    return UserMapper.toDTO(user);
+    return user.toJSON();
   }
 }

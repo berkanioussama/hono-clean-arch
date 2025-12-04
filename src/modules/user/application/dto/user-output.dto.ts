@@ -3,6 +3,6 @@ export interface UserOutputDTO {
   authProviderId: string;
   name: string;
   email: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

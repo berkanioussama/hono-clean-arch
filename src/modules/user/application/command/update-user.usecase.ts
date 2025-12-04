@@ -1,6 +1,5 @@
 import { IUserRepository } from "../../domain/IUser.repository";
 import { UpdateUserInputDTO } from "../dto/user-input.dto";
-import { UserMapper } from "../mapper/user.mapper";
 import { UserOutputDTO } from "../dto/user-output.dto";
 
 export class UpdateUserUseCase {
@@ -17,6 +16,6 @@ export class UpdateUserUseCase {
 
     const updatedUser = await this.userRepository.edit(user); 
 
-    return UserMapper.toDTO(updatedUser);
+    return updatedUser.toJSON();
   }
 }
