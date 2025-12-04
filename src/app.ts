@@ -7,6 +7,7 @@ import { limiter } from "./shared/api/middlewares/rate-limiter";
 import { compress } from '@hono/bun-compress'
 import { requireAuth } from "./shared/api/middlewares/clerk-require-auth"
 import clerkWebhook from "./modules/user/api/webhooks/users.webhook"
+import { cors } from "hono/cors";
 
 const app = new Hono();
 
@@ -16,6 +17,10 @@ app.use(compress())
 
 app.route('/api/v1/webhook/clerk', clerkWebhook);
 
+app.use("*",cors({
+    origin: process.env.CORS_ORIGIN || "*",
+    credentials: true
+}))
 app.use("*", clerkMiddleware())
 app.use("*", requireAuth())
 app.use("*", limiter)
