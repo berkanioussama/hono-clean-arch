@@ -12,7 +12,7 @@ export class CreateUserUC {
       throw new Error("Name must be at least 2 characters.");
     }
 
-    if(!input.email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    if(!input.email.trim().match(/^[^\s@]+(\.[^\s@]+)*@[^\s@]+(\.[^\s@]+)+$/)) {
       throw new Error("Invalid email.")
     }
 

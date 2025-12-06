@@ -8,14 +8,26 @@ export class UpdateUserUC {
   async execute(input: UpdateUserInputDTO): Promise<UserOutputDTO> {
     
     const user = await this.userRepo.findById(input.id);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("User not found")
     
-    if (input.name) user.changeName(input.name);
-    if (input.email) user.changeEmail(input.email);
-    user.changeUpdatedAt(new Date());
+    if (input.name) {
+      if (!input.name || input.name.trim().length < 2) {
+        throw new Error('Name must be at least 2 characters.')
+      }
+      user.changeName(input.name)
+    }
 
-    const updatedUser = await this.userRepo.edit(user); 
+    if (input.email) {
+      if(!input.email.trim().match(/^[^\s@]+(\.[^\s@]+)*@[^\s@]+(\.[^\s@]+)+$/)) {
+        throw new Error("Invalid email.")
+      }
+      user.changeEmail(input.email)
+    }
 
-    return updatedUser.toJSON();
+    user.changeUpdatedAt(new Date())
+
+    const updatedUser = await this.userRepo.edit(user)
+
+    return updatedUser.toJSON()
   }
 }
