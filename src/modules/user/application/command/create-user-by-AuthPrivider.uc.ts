@@ -1,6 +1,7 @@
 import { User } from "../../domain/user.entity"
 import { IUserAuthProviderRepo } from "../../domain/IUser-authProvider-repo"
 import { CreateUserInputDTO } from "../dto/user-input.dto"
+import { Email } from "../../domain/user.vo"
 
 export class CreateUserByAuthProviderIdUC {
   constructor(private userAuthProviderRepo: IUserAuthProviderRepo) {}
@@ -14,15 +15,13 @@ export class CreateUserByAuthProviderIdUC {
       throw new Error('Name must be at least 2 characters.')
     }
 
-    if(!input.email.trim().match(/^[^\s@]+(\.[^\s@]+)*@[^\s@]+(\.[^\s@]+)+$/)) {
-      throw new Error("Invalid email.")
-    }
+    const email = Email.create(input.email)
 
     const user = new User({
       id: crypto.randomUUID(),
       authProviderId: input.authProviderId,
       name: input.name,
-      email: input.email,
+      email: email,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

@@ -1,8 +1,10 @@
+import { Email } from "./user.vo";
+
 export interface UserProps {
   id: string;
   authProviderId: string;
   name: string;
-  email: string;
+  email: Email;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,8 +16,8 @@ export class User {
     if(props.name.trim().length < 2) {
       throw new Error("Name must be at least 2 characters.")
     }
-    if(!props.email.trim().match(/^[^\s@]+(\.[^\s@]+)*@[^\s@]+(\.[^\s@]+)+$/)) {
-      throw new Error("Invalid email.")
+    if (!(props.email instanceof Email)) {
+      throw new Error('Email must be an instance of the Email class');
     }
     this.props = props
   }
@@ -27,11 +29,8 @@ export class User {
     this.props.name = newName.trim()
   }
 
-  changeEmail(newEmail: string) {
-    if(!newEmail.trim().match(/^[^\s@]+(\.[^\s@]+)*@[^\s@]+(\.[^\s@]+)+$/)) {
-      throw new Error("Invalid email.")
-    }
-    this.props.email = newEmail.trim()
+  changeEmail(newEmail: Email) {
+    this.props.email = newEmail
   }
 
   changeUpdatedAt(newUpdatedAt: Date) {
@@ -41,9 +40,9 @@ export class User {
   get id() { return this.props.id }
   get authProviderId() { return this.props.authProviderId }
   get name() { return this.props.name }
-  get email() { return this.props.email }
+  get email() { return this.props.email.toString() }
   get createdAt() { return this.props.createdAt }
   get updatedAt() { return this.props.updatedAt }
   
-  toJSON(): UserProps { return this.props }
+  toJSON() { return { ...this.props, email: this.props.email.toString() } }
 }

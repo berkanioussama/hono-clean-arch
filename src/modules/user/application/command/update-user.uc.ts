@@ -1,6 +1,7 @@
 import { IUserRepo } from "../../domain/IUser.repo";
 import { UpdateUserInputDTO } from "../dto/user-input.dto";
 import { UserOutputDTO } from "../dto/user-output.dto";
+import { Email } from "../../domain/user.vo";
 
 export class UpdateUserUC {
   constructor(private userRepo: IUserRepo) {}
@@ -18,10 +19,8 @@ export class UpdateUserUC {
     }
 
     if (input.email) {
-      if(!input.email.trim().match(/^[^\s@]+(\.[^\s@]+)*@[^\s@]+(\.[^\s@]+)+$/)) {
-        throw new Error("Invalid email.")
-      }
-      user.changeEmail(input.email)
+      const email = Email.create(input.email)
+      user.changeEmail(email)
     }
 
     user.changeUpdatedAt(new Date())
