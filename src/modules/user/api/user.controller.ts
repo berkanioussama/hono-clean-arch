@@ -20,6 +20,7 @@ export class UserController {
     async createUser(c: Context) {
         try {
             const auth = getAuth(c)
+            if(!auth) return c.json(ApiResponse("Unauthorized, not connected"), 401)
             const data = c.req.valid('json')
             const user = await this.createUserUC.execute({authProviderId: auth.userId, ...data})
             return c.json(ApiResponse(user), 201)
@@ -30,6 +31,8 @@ export class UserController {
 
     async getAllUsers(c: Context) {
         try {
+            const auth = getAuth(c)
+            if(!auth) return c.json(ApiResponse("Unauthorized, not connected"), 401)
             const users = await this.getAllUsersUC.execute()
             return c.json(ApiResponse(users))
         } catch (error) {
@@ -40,6 +43,7 @@ export class UserController {
     async getUserById(c: Context) {
         try {
             const auth = getAuth(c)
+            if(!auth?.userId) return c.json(ApiResponse("Unauthorized, not connected"), 401)
             const id = c.req.param("id");
             const user = await this.getUserByIdUC.execute({ id, authProviderId: auth.userId })
             return c.json(ApiResponse(user))
@@ -51,6 +55,7 @@ export class UserController {
     async updateUser(c: Context) {
         try {
             const auth = getAuth(c)
+            if(!auth) return c.json(ApiResponse("Unauthorized, not connected"), 401)
             const id = c.req.param("id");
             const body = c.req.valid('json')
             const user = await this.updateUserUC.execute({id, authProviderId: auth.userId, ...body})
@@ -62,6 +67,8 @@ export class UserController {
 
     async deleteUser(c: Context) {
         try {
+            const auth = getAuth(c)
+            if(!auth) return c.json(ApiResponse("Unauthorized, not connected"), 401)
             const id = c.req.param("id");
             await this.deleteUserUC.execute({ id })
             return c.json(ApiResponse("User deleted"))

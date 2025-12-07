@@ -3,7 +3,7 @@ import { ApiResponse } from "./api-response";
 
 interface HandelErrorParams {
     c: Context;
-    error: Error;
+    error: any;
     message: string;
 }
 
