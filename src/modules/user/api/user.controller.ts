@@ -6,6 +6,7 @@ import { DeleteUserUC } from "../application/command/delete-user.uc";
 import { GetAllUsersUC } from "../application/query/get-all-users.uc";
 import { ApiResponse } from "../../../shared/api/utils/api-response";
 import { handelError } from "../../../shared/api/utils/handel-error";
+import { getAuth } from "@hono/clerk-auth";
 
 export class UserController {
     constructor(
@@ -18,7 +19,7 @@ export class UserController {
 
     async createUser(c: Context) {
         try {
-            const auth = c.get("auth");
+            const auth = getAuth(c)
             const data = c.req.valid('json')
             const user = await this.createUserUseCase.execute({authProviderId: auth.userId, ...data})
             return c.json(ApiResponse(user), 201)
@@ -38,7 +39,7 @@ export class UserController {
 
     async getUserById(c: Context) {
         try {
-            const auth = c.get("auth");
+            const auth = getAuth(c)
             const id = c.req.param("id");
             const user = await this.getUserByIdUseCase.execute({ id, authProviderId: auth.userId })
             return c.json(ApiResponse(user))
@@ -49,7 +50,7 @@ export class UserController {
 
     async updateUser(c: Context) {
         try {
-            const auth = c.get("auth");
+            const auth = getAuth(c)
             const id = c.req.param("id");
             const body = c.req.valid('json')
             const user = await this.updateUserUseCase.execute({id, authProviderId: auth.userId, ...body})
