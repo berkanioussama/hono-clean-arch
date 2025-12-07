@@ -10,18 +10,18 @@ import { getAuth } from "@hono/clerk-auth";
 
 export class UserController {
     constructor(
-        private createUserUseCase : CreateUserUC,
-        private getAllUsersUseCase: GetAllUsersUC,
-        private getUserByIdUseCase: GetUserByIdUC,
-        private updateUserUseCase : UpdateUserUC,
-        private deleteUserUseCase : DeleteUserUC
+        private createUserUC : CreateUserUC,
+        private getAllUsersUC: GetAllUsersUC,
+        private getUserByIdUC: GetUserByIdUC,
+        private updateUserUC : UpdateUserUC,
+        private deleteUserUC : DeleteUserUC
     ) {}
 
     async createUser(c: Context) {
         try {
             const auth = getAuth(c)
             const data = c.req.valid('json')
-            const user = await this.createUserUseCase.execute({authProviderId: auth.userId, ...data})
+            const user = await this.createUserUC.execute({authProviderId: auth.userId, ...data})
             return c.json(ApiResponse(user), 201)
         } catch (error) {
             return handelError({c, error, message: "error creating user"})
@@ -30,7 +30,7 @@ export class UserController {
 
     async getAllUsers(c: Context) {
         try {
-            const users = await this.getAllUsersUseCase.execute()
+            const users = await this.getAllUsersUC.execute()
             return c.json(ApiResponse(users))
         } catch (error) {
             return handelError({c, error, message: "error getting users"})
@@ -41,7 +41,7 @@ export class UserController {
         try {
             const auth = getAuth(c)
             const id = c.req.param("id");
-            const user = await this.getUserByIdUseCase.execute({ id, authProviderId: auth.userId })
+            const user = await this.getUserByIdUC.execute({ id, authProviderId: auth.userId })
             return c.json(ApiResponse(user))
         } catch (error) {
             return handelError({c, error, message: "error getting user"})
@@ -53,7 +53,7 @@ export class UserController {
             const auth = getAuth(c)
             const id = c.req.param("id");
             const body = c.req.valid('json')
-            const user = await this.updateUserUseCase.execute({id, authProviderId: auth.userId, ...body})
+            const user = await this.updateUserUC.execute({id, authProviderId: auth.userId, ...body})
             return c.json(ApiResponse(user))
         } catch (error) {
             return handelError({c, error, message: "error updating user"})
@@ -63,7 +63,7 @@ export class UserController {
     async deleteUser(c: Context) {
         try {
             const id = c.req.param("id");
-            await this.deleteUserUseCase.execute({ id })
+            await this.deleteUserUC.execute({ id })
             return c.json(ApiResponse("User deleted"))
         } catch (error) {
             return handelError({c, error, message: "error deleting user"})

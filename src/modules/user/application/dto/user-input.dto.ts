@@ -9,6 +9,10 @@ export interface GetUserInputDTO {
   authProviderId: string;
 }
 
+export interface GetUserByAuthProviderInputDTO {
+  authProviderId: string;
+}
+
 export interface GetUserByEmailInputDTO {
   email: string;
   authProviderId: string;
