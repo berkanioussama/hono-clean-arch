@@ -2,6 +2,7 @@ export interface CreateUserInputDTO {
   authProviderId: string;
   name: string;
   email: string;
+  image: string;
 }
 
 export interface GetUserInputDTO {
@@ -22,6 +23,7 @@ export interface UpdateUserInputDTO {
   id: string;
   name?: string;   // optional
   email?: string;  // optional
+  image?: string;  // optional
 }
 
 export interface DeleteUserInputDTO {

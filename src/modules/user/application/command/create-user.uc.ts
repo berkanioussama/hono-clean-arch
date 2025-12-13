@@ -1,4 +1,4 @@
-import { User } from "@/modules/user/domain/user.entity"
+import { Role, User } from "@/modules/user/domain/user.entity"
 import { IUserRepo } from "@/modules/user/domain/IUser.repo"
 import { CreateUserInputDTO } from "@/modules/user/application/dto/user-input.dto"
 import { UserOutputDTO } from "@/modules/user/application/dto/user-output.dto";
@@ -20,6 +20,8 @@ export class CreateUserUC {
       authProviderId: input.authProviderId,
       name: input.name,
       email: email,
+      image: input.image,
+      role: Role.USER,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

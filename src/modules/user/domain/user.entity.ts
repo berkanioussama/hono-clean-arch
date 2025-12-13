@@ -1,10 +1,14 @@
 import { Email } from "@/modules/user/domain/user.vo";
 
+export enum Role { USER = "user", ADMIN = "admin" }
+
 export interface UserProps {
   id: string;
   authProviderId: string;
   name: string;
   email: Email;
+  image: string;
+  role: Role;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,11 +32,12 @@ export class User {
     }
     this.props.name = newName.trim()
   }
-
   changeEmail(newEmail: Email) {
     this.props.email = newEmail
   }
-
+  changeImage(newImage: string) {
+    this.props.image = newImage
+  }
   changeUpdatedAt(newUpdatedAt: Date) {
     this.props.updatedAt = newUpdatedAt
   }
@@ -41,6 +46,8 @@ export class User {
   get authProviderId() { return this.props.authProviderId }
   get name() { return this.props.name }
   get email() { return this.props.email.toString() }
+  get image() { return this.props.image }
+  get role() { return this.props.role }
   get createdAt() { return this.props.createdAt }
   get updatedAt() { return this.props.updatedAt }
   

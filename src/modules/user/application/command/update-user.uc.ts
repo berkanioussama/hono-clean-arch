@@ -22,6 +22,12 @@ export class UpdateUserUC {
       const email = Email.create(input.email)
       user.changeEmail(email)
     }
+    if (input.image) {
+      if (!input.image || input.image.trim().length === 0) {
+        throw new Error('Image URL cannot be empty.')
+      }
+      user.changeImage(input.image)
+    }
 
     user.changeUpdatedAt(new Date())
 

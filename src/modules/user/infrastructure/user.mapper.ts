@@ -1,4 +1,4 @@
-import { User } from "@/modules/user/domain/user.entity";
+import { Role, User } from "@/modules/user/domain/user.entity";
 import { InferSelectModel } from "drizzle-orm";
 import { users } from "@/shared/infrastructure/database/schema";
 import { Email } from "@/modules/user/domain/user.vo";
@@ -14,6 +14,8 @@ export class UserMapper {
             authProviderId: user.auth_provider_id,
             name: user.name,
             email: email,
+            image: user.image,
+            role: user.role as Role,
             createdAt: new Date(user.created_at),
             updatedAt: new Date(user.updated_at),
         });

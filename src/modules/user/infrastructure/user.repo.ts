@@ -13,6 +13,7 @@ export class UserRepo implements IUserRepo {
             auth_provider_id: user.authProviderId,
             name: user.name,
             email: user.email,
+            image: user.image,
             created_at: user.createdAt,
             updated_at: user.updatedAt,
         }).returning();

@@ -50,6 +50,7 @@ clerkWebhook.post('/', async (c) => {
           authProviderId: event.data.id,
           name: `${event.data.first_name || ''} ${event.data.last_name || ''}`.trim(),
           email: event.data.email_addresses?.[0]?.email_address,
+          image: event.data.profile_image_url || '',
         });
       } else if (event.type === 'user.deleted') {
         await deleteUserByAuthProviderIdUC.execute({authProviderId: event.data.id});

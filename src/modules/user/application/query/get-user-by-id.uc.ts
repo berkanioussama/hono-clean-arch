@@ -14,7 +14,7 @@ export class GetUserByIdUC {
 
     if (!user) return null;
     if (user.authProviderId !== input.authProviderId) {
-        throw new Error("Unauthorized");
+      throw new Error("Unauthorized");
     }
 
     return user.toJSON();
