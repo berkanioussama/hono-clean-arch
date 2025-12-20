@@ -10,12 +10,13 @@ export class UserRepo implements IUserRepo {
     async add(user: User): Promise<User> {
         const insertedUser = await db.insert(users).values({
             id: user.id,
-            provider_id: user.providerId,
+            providerId: user.providerId,
             name: user.name,
             email: user.email,
             image: user.image,
-            created_at: user.createdAt,
-            updated_at: user.updatedAt,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
         }).returning();
 
         return UserMapper.toDomain(insertedUser[0]);
@@ -25,7 +26,7 @@ export class UserRepo implements IUserRepo {
         const updatedUser = await db.update(users).set({
             name: user.name,
             email: user.email,
-            updated_at: user.updatedAt,
+            updatedAt: user.updatedAt,
         }).where(eq(users.id, user.id)).returning();
         
         return UserMapper.toDomain(updatedUser[0]);

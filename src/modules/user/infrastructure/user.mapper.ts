@@ -11,13 +11,13 @@ export class UserMapper {
         const email = Email.create(user.email)
         return new User({
             id: user.id,
-            providerId: user.provider_id,
+            providerId: user.providerId,
             name: user.name,
             email: email,
             image: user.image,
             role: user.role as Role,
-            createdAt: new Date(user.created_at),
-            updatedAt: new Date(user.updated_at),
+            createdAt: new Date(user.createdAt),
+            updatedAt: new Date(user.updatedAt),
         });
     }
 }
