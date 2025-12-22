@@ -12,3 +12,5 @@ Tech stack
 - Clerk v6
 - svix
 - Zod v4
+
+do not use old or deprecated patterns
