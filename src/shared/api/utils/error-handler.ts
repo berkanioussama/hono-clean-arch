@@ -1,13 +1,13 @@
 import { Context } from "hono";
 import { ApiResponse } from "@/shared/api/utils/api-response";
 
-interface HandelErrorParams {
+interface ErrorHandlerParams {
     c: Context;
     error: any;
     message: string;
 }
 
-export const handelError = ({c, error, message}: HandelErrorParams) => {
+export const errorHandler = ({c, error, message}: ErrorHandlerParams) => {
     console.log(error)
     return c.json(ApiResponse(message), 500)
 }
