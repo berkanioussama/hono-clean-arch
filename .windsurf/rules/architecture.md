@@ -19,8 +19,7 @@ src/
 │   └── user/
 │   │   ├── api/
 │   │   ├── application/
-│   │   │    └── commands/
-│   │   │    └── query/
+│   │   │    └── usecase/
 │   │   │    └── dto/
 │   │   ├── domain/
 │   │   └── infrastructure/

@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { Webhook } from 'svix';
 import { UserProviderRepo } from '@/modules/user/infrastructure/user-provider.repo';
-import { AddUserByProviderUC } from '@/modules/user/application/command/add-user-by-provider.uc';
-import { RemoveUserByProviderIdUC } from '@/modules/user/application/command/remove-user-by-provider.uc';
+import { AddUserByProviderUC } from '@/modules/user/application/usecase/add-user-by-provider.uc';
+import { RemoveUserByProviderIdUC } from '@/modules/user/application/usecase/remove-user-by-provider.uc';
 
 type ClerkWebhookEvent = {
   type: string;

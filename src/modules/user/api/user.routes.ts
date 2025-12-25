@@ -1,15 +1,15 @@
 import { Hono } from "hono";
 import { UserRepo } from "@/modules/user/infrastructure/user.repo";
-import { AddUserUC } from "@/modules/user/application/command/add-user.uc";
-import { EditUserUC } from "@/modules/user/application/command/edit-user.uc";
-import { RemoveUserUC } from "@/modules/user/application/command/remove-user.uc";
-import { FindUserByIdUC } from "@/modules/user/application/query/find-user-by-id.uc";
-import { FindAllUsersUC } from "@/modules/user/application/query/find-all-users.uc";
+import { AddUserUC } from "@/modules/user/application/usecase/add-user.uc";
+import { EditUserUC } from "@/modules/user/application/usecase/edit-user.uc";
+import { RemoveUserUC } from "@/modules/user/application/usecase/remove-user.uc";
+import { FindUserByIdUC } from "@/modules/user/application/usecase/find-user-by-id.uc";
+import { FindAllUsersUC } from "@/modules/user/application/usecase/find-all-users.uc";
 import { UserController } from "@/modules/user/api/user.controller";
 import { zValidator } from "@hono/zod-validator";
 import { AddUserSchema, EditUserSchema } from "@/modules/user/api/user.validator";
 import { requireAdminAuth } from "@/shared/api/middlewares/clerk-require-auth";
-import { CheckAdminAccessUC } from "@/modules/user/application/query/check-admin-access.uc";
+import { CheckAdminAccessUC } from "@/modules/user/application/usecase/check-admin-access.uc";
 import { UserProviderRepo } from "@/modules/user/infrastructure/user-provider.repo";
 
 export const userRoutes = new Hono();
