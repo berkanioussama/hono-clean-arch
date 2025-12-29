@@ -4,9 +4,12 @@ import { AddUserDTO, UserDTO } from "@/modules/user/application/dto/user.dto"
 import { Email } from "@/modules/user/domain/user.vo";
 
 export class AddUserUC {
-  constructor(private userRepository: IUserRepo) {}
+  constructor(private userRepo: IUserRepo) {}
 
   async execute(input: AddUserDTO): Promise<UserDTO> {
+
+    const existingUser = await this.userRepo.findByProviderId(input.providerId)
+    if (existingUser) throw new Error('User already exists')
 
     const email = Email.create(input.email)
 
@@ -17,7 +20,7 @@ export class AddUserUC {
       image: input.image,
     });
 
-    const createdUser = await this.userRepository.add(user)
+    const createdUser = await this.userRepo.add(user)
 
     return createdUser.toJSON()
   }
