@@ -16,18 +16,11 @@ export interface UserProps extends CreateUserProps {
 }
 
 export class User {
-  private constructor(private readonly props: UserProps) {
+  private constructor(private props: UserProps) {
     this.validate();
   }
 
   static create(props: CreateUserProps): User {
-    if (props.name.trim().length < 2) {
-      throw new Error("Name must be at least 2 characters.");
-    }
-    if (!(props.email instanceof Email)) {
-      throw new Error("Email must be an Email instance");
-    }
-
     return new User({
       ...props,
       id: crypto.randomUUID(),
@@ -42,11 +35,17 @@ export class User {
   }
 
   private validate() {
+    if (this.props.providerId.trim().length < 2) {
+      throw new Error("Provider ID must be at least 2 characters.");
+    }
     if (this.props.name.trim().length < 2) {
       throw new Error("Name must be at least 2 characters.");
     }
     if (!(this.props.email instanceof Email)) {
       throw new Error("Email must be an Email instance");
+    }
+    if (this.props.image.trim().length < 3) {
+      throw new Error("Invalid image URL.");
     }
   }
 
