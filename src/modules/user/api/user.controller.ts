@@ -79,7 +79,7 @@ export class UserController {
         try {
             const auth = await getAuth(c)
             if(!auth?.userId) return errorResponse(c, 401, "Unauthorized, not connected")
-            const user = await this.findUserByProviderIdUC.execute({providerId: auth.userId })
+            const user = await this.findUserByProviderIdUC.execute(auth.userId)
             return successResponse(c, 200, user)
         } catch (error) {
             return errorHandler({c, error, message: "Server error: getting user"})

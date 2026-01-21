@@ -1,5 +1,5 @@
 import { IUserRepo } from "../../domain/IUser.repo";
-import { Email, ImageUrl } from "../../domain/user.vo";
+import { Email, FirstName, LastName, ImageUrl } from "../../domain/valueObject";
 import { EditUserDTO, UserDTO } from "../dto/user.dto";
 import { UserDTOMapper } from "../dto/user-dto.mapper";
 
@@ -13,8 +13,14 @@ export class EditUserUC {
 
     if(user.providerId.toString() !== input.providerId) throw new Error("Not authorized to edit this user")
     
-    if (input.name) {
-      user.changeName(input.name)
+    if (input.firstName) {
+      const firstName = FirstName.create(input.firstName)
+      user.changeFirstName(firstName)
+    }
+
+    if (input.lastName) {
+      const lastName = LastName.create(input.lastName)
+      user.changeLastName(lastName)
     }
 
     if (input.email) {

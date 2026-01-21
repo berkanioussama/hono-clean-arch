@@ -1,7 +1,7 @@
 import { User } from "../../domain/user.entity"
 import { IUserRepo } from "../../domain/IUser.repo"
 import { AddUserDTO, UserDTO } from "../dto/user.dto"
-import { Email, ProviderId, ImageUrl } from "../../domain/user.vo";
+import { Email, ProviderId, ImageUrl, FirstName, LastName } from "../../domain/valueObject";
 import { UserDTOMapper } from "../dto/user-dto.mapper";
 
 export class AddUserAdminUC {
@@ -17,11 +17,14 @@ export class AddUserAdminUC {
 
     const providerId = ProviderId.create(input.providerId)
     const email = Email.create(input.email)
+    const firstName = FirstName.create(input.firstName)
+    const lastName = LastName.create(input.lastName)
     const image = ImageUrl.create(input.image)
 
     const user = User.create({
       providerId: providerId,
-      name: input.name,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       image: image,
     });

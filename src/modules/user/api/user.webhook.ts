@@ -48,12 +48,13 @@ clerkWebhook.post('/', async (c) => {
       if (event.type === 'user.created' || event.type === 'user.updated') {
         await addUserAdminUC.execute({
           providerId: event.data.id,
-          name: `${event.data.first_name || ''} ${event.data.last_name || ''}`.trim(),
+          firstName: event.data.first_name || '',
+          lastName: event.data.last_name || '',
           email: event.data.email_addresses?.[0]?.email_address,
           image: event.data.profile_image_url || '',
         });
       } else if (event.type === 'user.deleted') {
-        await removeUserByProviderIdUC.execute({providerId: event.data.id});
+        await removeUserByProviderIdUC.execute(event.data.id);
       }
 
       return c.text('Webhook processed successfully', 200);

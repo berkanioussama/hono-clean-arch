@@ -6,7 +6,8 @@ export class UserDTOMapper {
     return {
       id: user.id,
       providerId: user.providerId.toString(),
-      name: user.name,
+      firstName: user.firstName.toString(),
+      lastName: user.lastName.toString(),
       email: user.email.toString(),
       image: user.image?.toString(),
       role: user.role,

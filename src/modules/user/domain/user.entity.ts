@@ -1,10 +1,11 @@
-import { Email, ProviderId, ImageUrl } from "./user.vo";
+import { Email, ImageUrl, ProviderId, FirstName, LastName } from './valueObject'
 
 export enum Role { USER = "user", ADMIN = "admin" }
 
 export interface CreateUserProps {
   providerId: ProviderId;
-  name: string;
+  firstName: FirstName;
+  lastName: LastName;
   email: Email;
   image: ImageUrl;
 }
@@ -33,17 +34,17 @@ export class User {
     return new User(props);
   }
 
-  private static readonly NAME_MIN_LENGTH = 2;
-  private static readonly NAME_MAX_LENGTH = 100;
-
   private static validate(props: CreateUserProps) {
-    
     if (!(props.providerId instanceof ProviderId)) {
       throw new Error("Provider ID must be a ProviderId instance.");
     }
-    if (props.name.trim().length < User.NAME_MIN_LENGTH || props.name.trim().length > User.NAME_MAX_LENGTH) {
-      throw new Error(`Name must be between ${User.NAME_MIN_LENGTH} and ${User.NAME_MAX_LENGTH} characters.`);
+    if (!(props.firstName instanceof FirstName)) {
+      throw new Error("First Name must be a FirstName instance");
     }
+    if (!(props.lastName instanceof LastName)) {
+      throw new Error("Last Name must be a LastName instance");
+    }
+    
     if (!(props.email instanceof Email)) {
       throw new Error("Email must be an Email instance");
     }
@@ -52,11 +53,13 @@ export class User {
     }
   }
 
-  changeName(newName: string) {
-    if (!newName || newName.trim().length < User.NAME_MIN_LENGTH) {
-      throw new Error(`Name must be at least ${User.NAME_MIN_LENGTH} characters.`);
-    }
-    this.props.name = newName.trim();
+  changeFirstName(newFirstName: FirstName) {
+    this.props.firstName = newFirstName;
+    this.props.updatedAt = new Date();
+  }
+
+  changeLastName(newLastName: LastName) {
+    this.props.lastName = newLastName;
     this.props.updatedAt = new Date();
   }
 
@@ -72,7 +75,8 @@ export class User {
 
   get id() { return this.props.id }
   get providerId() { return this.props.providerId }
-  get name() { return this.props.name }
+  get firstName() { return this.props.firstName }
+  get lastName() { return this.props.lastName }
   get email() { return this.props.email }
   get image() { return this.props.image }
   get role() { return this.props.role }

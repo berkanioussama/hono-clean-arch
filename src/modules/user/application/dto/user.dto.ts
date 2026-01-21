@@ -3,7 +3,8 @@ import { Role } from "../../domain/user.entity";
 export interface UserDTO {
   id: string;
   providerId: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   image: string;
   role: Role;
@@ -23,10 +24,4 @@ export type EditUserDTO =
 
 export type FindUserDTO = Pick<UserDTO, 'id' | 'providerId'>
 
-export type FindUserByProviderIdDTO = Pick<UserDTO, 'providerId'>
-
 export type FindUserByEmailDTO = Pick<UserDTO, 'email' | 'providerId'>
-
-export type RemoveUserDTO = Pick<UserDTO, 'id'>
-
-export type RemoveUserByProviderIdDTO = Pick<UserDTO, 'providerId'>
