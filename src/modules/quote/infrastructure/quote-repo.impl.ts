@@ -11,8 +11,8 @@ export class QuoteRepoImpl implements IQuoteRepo {
         const insertedQuote = await db.insert(quotes).values({
             id: quote.id,
             userId: quote.userId,
-            author: quote.author,
-            description: quote.description,
+            author: quote.author.toString(),
+            description: quote.description.toString(),
             createdAt: quote.createdAt,
             updatedAt: quote.updatedAt,
         }).returning();
@@ -22,8 +22,8 @@ export class QuoteRepoImpl implements IQuoteRepo {
 
     async edit(quote: Quote): Promise<Quote> {
         const updatedQuote = await db.update(quotes).set({
-            author: quote.author,
-            description: quote.description,
+            author: quote.author.toString(),
+            description: quote.description.toString(),
             updatedAt: quote.updatedAt,
         }).where(eq(quotes.id, quote.id)).returning();
         

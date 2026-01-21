@@ -11,7 +11,8 @@ export class UserRepoImpl implements IUserRepo {
         const insertedUser = await db.insert(users).values({
             id: user.id,
             providerId: user.providerId.toString(),
-            name: user.name,
+            firstName: user.firstName.toString(),
+            lastName: user.lastName.toString(),
             email: user.email.toString(),
             image: user.image?.toString(),
             role: user.role,
@@ -24,7 +25,8 @@ export class UserRepoImpl implements IUserRepo {
 
     async edit(user: User): Promise<User> {
         const updatedUser = await db.update(users).set({
-            name: user.name,
+            firstName: user.firstName.toString(),
+            lastName: user.lastName.toString(),
             email: user.email.toString(),
             image: user.image?.toString(),
             updatedAt: user.updatedAt,

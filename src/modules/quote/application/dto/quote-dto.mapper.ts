@@ -6,8 +6,8 @@ export class QuoteDTOMapper {
     return {
       id: quote.id,
       userId: quote.userId,
-      author: quote.author,
-      description: quote.description,
+      author: quote.author.toString(),
+      description: quote.description.toString(),
       createdAt: quote.createdAt,
       updatedAt: quote.updatedAt,
     };

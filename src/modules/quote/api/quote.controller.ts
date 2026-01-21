@@ -11,7 +11,7 @@ import { RemoveQuoteAdminUC } from "../application/usecase/remove-quote-admin.uc
 import { RemoveQuoteUC } from "../application/usecase/remove-quote.uc";
 import { successResponse, errorResponse } from "../../../shared/api/utils/api-response";
 import { errorHandler } from "../../../shared/api/utils/error-handler";
-import { AddQuoteSchema, EditQuoteSchema, EditQuoteAdminSchema } from "./quote.validation";
+import { AddQuoteSchema, EditQuoteSchema } from "./quote.validation";
 import { UserService } from "../../user/application/service/user.service";
 
 export class QuoteController {

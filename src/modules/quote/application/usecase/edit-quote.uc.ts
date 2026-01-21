@@ -1,6 +1,7 @@
 import { IQuoteRepo } from "../../domain/IQuote.repo";
 import { EditQuoteDTO, QuoteDTO } from "../dto/quote.dto";
 import { QuoteDTOMapper } from "../dto/quote-dto.mapper";
+import { Author, Description } from "../../domain/valueObject";
 
 export class EditQuoteUC {
     constructor(private quoteRepo: IQuoteRepo) {}
@@ -14,11 +15,13 @@ export class EditQuoteUC {
         }
         
         if (input.author) {
-        quote.changeAuthor(input.author)
+            const author = Author.create(input.author)
+            quote.changeAuthor(author)
         }
         
         if (input.description) {
-        quote.changeDescription(input.description)
+            const description = Description.create(input.description)
+            quote.changeDescription(description)
         }
 
         const updatedQuote = await this.quoteRepo.edit(quote)
