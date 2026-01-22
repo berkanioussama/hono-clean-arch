@@ -1,4 +1,5 @@
 import { Role } from "../../domain/user.entity";
+import { QuoteDTO } from "../../../quote/application/dto/quote.dto";
 
 export interface UserDTO {
   id: string;
@@ -25,3 +26,8 @@ export type EditUserDTO =
 export type FindUserDTO = Pick<UserDTO, 'id' | 'providerId'>
 
 export type FindUserByEmailDTO = Pick<UserDTO, 'email' | 'providerId'>
+
+export interface UserProfileDTO {
+  user: UserDTO;
+  quotes: QuoteDTO[];
+}

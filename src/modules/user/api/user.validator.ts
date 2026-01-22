@@ -1,16 +1,21 @@
 import { z } from "zod";
 import { Role } from "../domain/user.entity";
+import { QuoteSchema } from "../../quote/api/quote.validator";
 
 export const UserSchema = z.object({
   id: z.string().min(2, { message: "ID must be at least 2 characters." }),
   providerId: z.string().min(2, { message: "Auth provider ID must be at least 2 characters." }),
-  firstName: z.string().min(2, { message: "First name must be at least 2 characters." }),
-  lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
+  firstName: z.string().min(2, { message: "First name must be at least 2 characters." }).max(100, { message: "First name must not exceed 100 characters." }),
+  lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }).max(100, { message: "Last name must not exceed 100 characters." }),
   email: z.email({ message: "Invalid email address." }),
   image: z.string(),
   role: z.enum([Role.USER, Role.ADMIN], { message: `Role must be either '${Role.USER}' or '${Role.ADMIN}'` }),
   createdAt: z.string().transform(str => new Date(str)),
   updatedAt: z.string().transform(str => new Date(str)),
+})
+
+export const UserProfileSchema = UserSchema.extend({
+    quotes: z.array(QuoteSchema),
 })
 
 /*-----*****-----*/

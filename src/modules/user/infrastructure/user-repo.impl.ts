@@ -4,6 +4,8 @@ import { db } from "../../../shared/infrastructure/database/db";
 import { users } from "../../../shared/infrastructure/database/schema";
 import { eq } from "drizzle-orm";
 import { UserDBMapper } from "./user-db.mapper";
+import { UserProfileDBMapper } from "./user-profile-db.mapper";
+import { IUserProfile } from "../domain/IUser-profile";
 
 export class UserRepoImpl implements IUserRepo {
     
@@ -53,6 +55,30 @@ export class UserRepoImpl implements IUserRepo {
         if (findedUser.length === 0) return null
 
         return UserDBMapper.toDomain(findedUser[0])
+    }
+
+    async findProfileById(id: string): Promise<IUserProfile | null> {
+        const findedUser = await db.query.users.findFirst({
+            where: eq(users.id, id),
+            with: {
+                quotes: true
+            }
+        })
+        if (!findedUser) return null
+
+        return UserProfileDBMapper.toDomain(findedUser)
+    }
+
+    async findProfileByProviderId(providerId: string): Promise<IUserProfile | null> {
+        const findedUser = await db.query.users.findFirst({
+            where: eq(users.providerId, providerId),
+            with: {
+                quotes: true
+            }
+        })
+        if (!findedUser) return null
+
+        return UserProfileDBMapper.toDomain(findedUser)
     }
     
     async findByEmail(email: string): Promise<User | null> {
