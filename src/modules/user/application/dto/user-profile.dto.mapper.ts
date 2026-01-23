@@ -1,6 +1,6 @@
 import { UserProfileDTO } from "./user.dto";
-import { UserDTOMapper } from "./user-dto.mapper";
-import { QuoteDTOMapper } from "../../../quote/application/dto/quote-dto.mapper";
+import { UserDTOMapper } from "./user.dto.mapper";
+import { QuoteDTOMapper } from "../../../quote/application/dto/quote.dto.mapper";
 import { IUserProfile } from "../../domain/IUser-profile";
 
 export class UserProfileDTOMapper {

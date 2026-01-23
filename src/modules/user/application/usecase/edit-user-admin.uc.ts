@@ -1,7 +1,7 @@
 import { IUserRepo } from "../../domain/IUser.repo";
 import { Email, ImageUrl, FirstName, LastName } from "../../domain/valueObject";
 import { EditUserAdminDTO, UserDTO } from "../dto/user.dto";
-import { UserDTOMapper } from "../dto/user-dto.mapper";
+import { UserDTOMapper } from "../dto/user.dto.mapper";
 
 export class EditUserAdminUC {
   constructor(private userRepo: IUserRepo) {}

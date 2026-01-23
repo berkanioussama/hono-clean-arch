@@ -1,6 +1,6 @@
 import { IQuoteRepo } from "../../domain/IQuote.repo";
 import { EditQuoteDTO, QuoteDTO } from "../dto/quote.dto";
-import { QuoteDTOMapper } from "../dto/quote-dto.mapper";
+import { QuoteDTOMapper } from "../dto/quote.dto.mapper";
 import { Author, Description } from "../../domain/valueObject";
 
 export class EditQuoteUC {

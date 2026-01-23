@@ -3,7 +3,7 @@ import { IQuoteRepo } from "../domain/IQuote.repo";
 import { db } from "../../../shared/infrastructure/database/db";
 import { quotes } from "../../../shared/infrastructure/database/schema";
 import { eq } from "drizzle-orm";
-import { QuoteDBMapper } from "./quote-db.mapper";
+import { QuoteDBMapper } from "./quote.db.mapper";
 
 export class QuoteRepoImpl implements IQuoteRepo {
     

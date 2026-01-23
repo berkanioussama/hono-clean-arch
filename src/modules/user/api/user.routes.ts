@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { UserRepoImpl } from "../infrastructure/user-repo.impl";
+import { UserRepoImpl } from "../infrastructure/user.repo.impl";
 import { AddUserAdminUC } from "../application/usecase/add-user-admin.uc";
 import { EditUserAdminUC } from "../application/usecase/edit-user-admin.uc";
 import { EditUserUC } from "../application/usecase/edit-user.uc";

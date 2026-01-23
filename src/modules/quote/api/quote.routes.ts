@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { UserRepoImpl } from "../../user/infrastructure/user-repo.impl";
-import { QuoteRepoImpl } from "../infrastructure/quote-repo.impl";
+import { UserRepoImpl } from "../../user/infrastructure/user.repo.impl";
+import { QuoteRepoImpl } from "../infrastructure/quote.repo.impl";
 import { AddQuoteUC } from "../application/usecase/add-quote.uc";
 import { EditQuoteUC } from "../application/usecase/edit-quote.uc";
 import { FindAllQuotesAdminUC } from "../application/usecase/find-all-quotes-admin.uc";

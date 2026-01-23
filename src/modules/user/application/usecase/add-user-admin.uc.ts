@@ -2,7 +2,7 @@ import { User } from "../../domain/user.entity"
 import { IUserRepo } from "../../domain/IUser.repo"
 import { AddUserDTO, UserDTO } from "../dto/user.dto"
 import { Email, ProviderId, ImageUrl, FirstName, LastName } from "../../domain/valueObject";
-import { UserDTOMapper } from "../dto/user-dto.mapper";
+import { UserDTOMapper } from "../dto/user.dto.mapper";
 
 export class AddUserAdminUC {
   constructor(private userRepo: IUserRepo) {}

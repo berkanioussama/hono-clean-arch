@@ -3,8 +3,8 @@ import { IUserRepo } from "../domain/IUser.repo";
 import { db } from "../../../shared/infrastructure/database/db";
 import { users } from "../../../shared/infrastructure/database/schema";
 import { eq } from "drizzle-orm";
-import { UserDBMapper } from "./user-db.mapper";
-import { UserProfileDBMapper } from "./user-profile-db.mapper";
+import { UserDBMapper } from "./user.db.mapper";
+import { UserProfileDBMapper } from "./user-profile.db.mapper";
 import { IUserProfile } from "../domain/IUser-profile";
 
 export class UserRepoImpl implements IUserRepo {

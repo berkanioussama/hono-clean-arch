@@ -1,6 +1,6 @@
 import { IUserRepo } from "../../domain/IUser.repo"
 import { UserProfileDTO } from "../dto/user.dto"
-import { UserProfileDTOMapper } from "../dto/user-profile-dto.mapper"
+import { UserProfileDTOMapper } from "../dto/user-profile.dto.mapper"
 
 export class FindProfileByIdAdminUC {
     constructor(private userRepo: IUserRepo) {}

@@ -1,6 +1,6 @@
 import { IQuoteRepo } from "../../domain/IQuote.repo"
 import { QuoteDTO } from "../dto/quote.dto"
-import { QuoteDTOMapper } from "../dto/quote-dto.mapper"
+import { QuoteDTOMapper } from "../dto/quote.dto.mapper"
 
 export class FindQuoteByIdAdminUC {
     constructor(private quoteRepo: IQuoteRepo) {}

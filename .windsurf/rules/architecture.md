@@ -6,10 +6,10 @@ trigger: always_on
 
 We are building a backend API using Clean Architecture
 
-- **Api layer**: contains controllers, validators, routes, middlewares, webhooks, depends on Application.
-- **Application layer**: contains use cases, dto, mappers, services and business rules.
-- **Domain layer**: contains entities, value objects, services and repository interfaces, must not depend on any other layer.
-- **Infrastructure layer**: contains concrete implementations of repositories, mappers, depends on Domain.
+- **Api layer**: contains controllers, validators, routes, middlewares, webhooks, depends on Application and Infrastructure layers, external frameworks and libraries.
+- **Application layer**: contains use cases, dto, mappers, services and business rules. depends on Domain layer only, no external frameworks and libraries.
+- **Domain layer**: contains entities, value objects, and repository interfaces, must not depend on any other layer, no external frameworks and libraries.
+- **Infrastructure layer**: contains concrete implementations of repositories, mappers, depends on Domain layer only, external frameworks and libraries.
 
 ---
 
@@ -25,4 +25,5 @@ We are building a backend API using Clean Architecture
 
 ## Database Tables
 
-- **users**: (id, providerId, name, email, image, role, createdAt, updatedAt)
+- **users**: (id, providerId, firstName, lastName, email, image, role, createdAt, updatedAt)
+- **quotes**: (id, userId, author, description, createdAt, updatedAt)
