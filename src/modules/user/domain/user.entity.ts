@@ -1,4 +1,5 @@
 import { Email, ImageUrl, ProviderId, FirstName, LastName, UserId } from './valueObject'
+import { ValidationError } from "../../../shared/domain/errors";
 
 export enum Role { USER = "user", ADMIN = "admin" }
 
@@ -36,20 +37,20 @@ export class User {
 
   private static validate(props: CreateUserProps) {
     if (!(props.providerId instanceof ProviderId)) {
-      throw new Error("Provider ID must be a ProviderId instance.");
+      throw new ValidationError("Provider ID must be a ProviderId instance.");
     }
     if (!(props.firstName instanceof FirstName)) {
-      throw new Error("First Name must be a FirstName instance");
+      throw new ValidationError("First Name must be a FirstName instance");
     }
     if (!(props.lastName instanceof LastName)) {
-      throw new Error("Last Name must be a LastName instance");
+      throw new ValidationError("Last Name must be a LastName instance");
     }
     
     if (!(props.email instanceof Email)) {
-      throw new Error("Email must be an Email instance");
+      throw new ValidationError("Email must be an Email instance");
     }
     if (!(props.image instanceof ImageUrl)) {
-      throw new Error("Image must be an ImageUrl instance");
+      throw new ValidationError("Image must be an ImageUrl instance");
     }
   }
 

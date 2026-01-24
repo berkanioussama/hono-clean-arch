@@ -1,12 +1,14 @@
-import { Author, Description } from "./valueObject";
+import { QuoteId, Author, Description } from "./valueObject";
+import { UserId } from "../../user/domain/valueObject";
+import { ValidationError } from "../../../shared/domain/errors";
 
 export interface CreateQuoteProps {
-    userId: string;
+    userId: UserId;
     author: Author;
     description: Description;
 }
 export interface QuoteProps extends CreateQuoteProps {
-    id: string;
+    id: QuoteId;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -17,7 +19,7 @@ export class Quote {
     static create(props: CreateQuoteProps): Quote {
         this.validate(props);
         return new Quote({
-            id: crypto.randomUUID(),
+            id: QuoteId.generate(),
             ...props,
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -29,11 +31,14 @@ export class Quote {
     }
 
     private static validate(props: CreateQuoteProps): void {
+        if(!(props.userId instanceof UserId)) {
+            throw new ValidationError("User ID must be an instance of UserId");
+        }
         if(!(props.author instanceof Author)) {
-            throw new Error("Author must be an instance of Author");
+            throw new ValidationError("Author must be an instance of Author");
         }
         if(!(props.description instanceof Description)) {
-            throw new Error("Description must be an instance of Description");
+            throw new ValidationError("Description must be an instance of Description");
         }
     }
 
@@ -46,8 +51,8 @@ export class Quote {
         this.props.updatedAt = new Date();
     }
     
-    get id(): string { return this.props.id; }
-    get userId(): string { return this.props.userId; }
+    get id(): QuoteId { return this.props.id; }
+    get userId(): UserId { return this.props.userId; }
     get author(): Author { return this.props.author; }
     get description(): Description { return this.props.description; }
     get createdAt(): Date { return this.props.createdAt; }

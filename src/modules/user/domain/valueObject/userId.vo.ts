@@ -1,3 +1,5 @@
+import { ValidationError } from "../../../../shared/domain/errors";
+
 export default class UserId {
     private userId: string
 
@@ -11,12 +13,12 @@ export default class UserId {
 
     public static create(userId: string): UserId {
         const trimmed = userId.trim()
-        if (!trimmed) throw new Error("User ID cannot be empty");
+        if (!trimmed) throw new ValidationError("User ID cannot be empty");
         if (!/^[a-zA-Z0-9_]+$/.test(trimmed)) {
-            throw new Error("User ID must contain only letters, numbers, and underscores.");
+            throw new ValidationError("User ID must contain only letters, numbers, and underscores.");
         }
         if (trimmed.length > 50) {
-            throw new Error("User ID must be at most 50 characters long.");
+            throw new ValidationError("User ID must be at most 50 characters long.");
         }
         return new UserId(trimmed);
     }

@@ -1,16 +1,14 @@
 import { IQuoteRepo } from "../../domain/IQuote.repo"
 import { QuoteDTO } from "../dto/quote.dto"
 import { QuoteDTOMapper } from "../dto/quote.dto.mapper"
+import { QuoteId } from "../../domain/valueObject"
 
 export class FindQuoteByIdAdminUC {
     constructor(private quoteRepo: IQuoteRepo) {}
 
     async execute(id: string): Promise<QuoteDTO | null> {
-        if (!id || id.trim().length === 0) {
-            throw new Error("Invalid ID");
-        }
-
-        const quote = await this.quoteRepo.findById(id);
+        const quoteIdVO = QuoteId.create(id)
+        const quote = await this.quoteRepo.findById(quoteIdVO);
         if (!quote) return null;
 
         return QuoteDTOMapper.toDTO(quote);

@@ -6,12 +6,13 @@ import { eq } from "drizzle-orm";
 import { UserDBMapper } from "./user.db.mapper";
 import { UserProfileDBMapper } from "./user-profile.db.mapper";
 import { IUserProfile } from "../domain/IUser-profile";
+import { Email, ProviderId, UserId } from "../domain/valueObject";
 
 export class UserRepoImpl implements IUserRepo {
     
     async add(user: User): Promise<User> {
         const insertedUser = await db.insert(users).values({
-            id: user.id,
+            id: user.id.toString(),
             providerId: user.providerId.toString(),
             firstName: user.firstName.toString(),
             lastName: user.lastName.toString(),
@@ -32,7 +33,7 @@ export class UserRepoImpl implements IUserRepo {
             email: user.email.toString(),
             image: user.image?.toString(),
             updatedAt: user.updatedAt,
-        }).where(eq(users.id, user.id)).returning();
+        }).where(eq(users.id, user.id.toString())).returning();
         
         return UserDBMapper.toDomain(updatedUser[0]);
     }
@@ -43,23 +44,23 @@ export class UserRepoImpl implements IUserRepo {
 
     }
     
-    async findById(id: string): Promise<User | null> {
-        const findedUser = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    async findById(id: UserId): Promise<User | null> {
+        const findedUser = await db.select().from(users).where(eq(users.id, id.toString())).limit(1);
         if (findedUser.length === 0) return null
 
         return UserDBMapper.toDomain(findedUser[0])
     }
 
-    async findByProviderId(providerId: string): Promise<User | null> {
-        const findedUser = await db.select().from(users).where(eq(users.providerId, providerId)).limit(1);
+    async findByProviderId(providerId: ProviderId): Promise<User | null> {
+        const findedUser = await db.select().from(users).where(eq(users.providerId, providerId.toString())).limit(1);
         if (findedUser.length === 0) return null
 
         return UserDBMapper.toDomain(findedUser[0])
     }
 
-    async findProfileById(id: string): Promise<IUserProfile | null> {
+    async findProfileById(id: UserId): Promise<IUserProfile | null> {
         const findedUser = await db.query.users.findFirst({
-            where: eq(users.id, id),
+            where: eq(users.id, id.toString()),
             with: {
                 quotes: true
             }
@@ -69,9 +70,9 @@ export class UserRepoImpl implements IUserRepo {
         return UserProfileDBMapper.toDomain(findedUser)
     }
 
-    async findProfileByProviderId(providerId: string): Promise<IUserProfile | null> {
+    async findProfileByProviderId(providerId: ProviderId): Promise<IUserProfile | null> {
         const findedUser = await db.query.users.findFirst({
-            where: eq(users.providerId, providerId),
+            where: eq(users.providerId, providerId.toString()),
             with: {
                 quotes: true
             }
@@ -81,18 +82,18 @@ export class UserRepoImpl implements IUserRepo {
         return UserProfileDBMapper.toDomain(findedUser)
     }
     
-    async findByEmail(email: string): Promise<User | null> {
-        const findedUser = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    async findByEmail(email: Email): Promise<User | null> {
+        const findedUser = await db.select().from(users).where(eq(users.email, email.toString())).limit(1);
         if (findedUser.length === 0) return null
 
         return UserDBMapper.toDomain(findedUser[0])
     }
 
-    async remove(id: string): Promise<void> {
-        await db.delete(users).where(eq(users.id, id));
+    async remove(id: UserId): Promise<void> {
+        await db.delete(users).where(eq(users.id, id.toString()));
     }
     
-    async removeByProviderId(providerId: string): Promise<void> {
-        await db.delete(users).where(eq(users.providerId, providerId));
+    async removeByProviderId(providerId: ProviderId): Promise<void> {
+        await db.delete(users).where(eq(users.providerId, providerId.toString()));
     }
 }
