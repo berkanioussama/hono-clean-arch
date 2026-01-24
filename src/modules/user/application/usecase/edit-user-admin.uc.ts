@@ -3,13 +3,14 @@ import { Email, ImageUrl, FirstName, LastName } from "../../domain/valueObject";
 import { EditUserAdminDTO, UserDTO } from "../dto/user.dto";
 import { UserDTOMapper } from "../dto/user.dto.mapper";
 import { NotFoundError } from "../../../../shared/domain/errors";
+import { UserId } from "../../domain/valueObject";
 
 export class EditUserAdminUC {
   constructor(private userRepo: IUserRepo) {}
 
   async execute(input: EditUserAdminDTO): Promise<UserDTO> {
-    
-    const user = await this.userRepo.findById(input.id);
+    const userId = UserId.create(input.id)
+    const user = await this.userRepo.findById(userId);
     if (!user) throw new NotFoundError("User not found")
     
     if (input.firstName) {

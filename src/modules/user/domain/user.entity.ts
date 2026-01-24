@@ -1,4 +1,4 @@
-import { Email, ImageUrl, ProviderId, FirstName, LastName } from './valueObject'
+import { Email, ImageUrl, ProviderId, FirstName, LastName, UserId } from './valueObject'
 
 export enum Role { USER = "user", ADMIN = "admin" }
 
@@ -10,7 +10,7 @@ export interface CreateUserProps {
   image: ImageUrl;
 }
 export interface UserProps extends CreateUserProps {
-  id: string;
+  id: UserId;
   role: Role;
   createdAt: Date;
   updatedAt: Date;
@@ -23,7 +23,7 @@ export class User {
     this.validate(props);
     return new User({
       ...props,
-      id: crypto.randomUUID(),
+      id: UserId.generate(),
       role: Role.USER,
       createdAt: new Date(),
       updatedAt: new Date(),

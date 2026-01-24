@@ -29,7 +29,7 @@ export class QuoteController {
             if(!user) throw new NotFoundError("User not found")
             const body = AddQuoteSchema.safeParse(await c.req.json())
             if(!body.success) throw new ValidationError("Invalid request data")
-            const quote = await this.addQuoteUC.execute({userId: user.id, ...body.data})
+            const quote = await this.addQuoteUC.execute({userId: user.id.toString(), ...body.data})
             return successResponse(c, 201, quote)
         } catch (error) {
             return errorHandler({c, error, message: "Server error: creating quote"})
@@ -45,7 +45,7 @@ export class QuoteController {
             const id = c.req.param("id");
             const body = EditQuoteSchema.safeParse(await c.req.json())
             if(!body.success) throw new ValidationError("Invalid request data")
-            const quote = await this.editQuoteUC.execute({ id, userId: user.id, ...body.data})
+            const quote = await this.editQuoteUC.execute({ id, userId: user.id.toString(), ...body.data})
             return successResponse(c, 200, quote)
         } catch (error) {
             return errorHandler({c, error, message: "Server error: updating quote"})
@@ -70,7 +70,7 @@ export class QuoteController {
             if(!auth?.userId) throw new UnauthorizedError("Unauthorized, not connected")
             const user = await this.userService.findUserByProviderId(auth.userId)
             if(!user) throw new NotFoundError("User not found")
-            const quotes = await this.findQuotesByUserIdUC.execute({userId: user.id})
+            const quotes = await this.findQuotesByUserIdUC.execute({userId: user.id.toString()})
             return successResponse(c, 200, quotes)
         } catch (error) {
             return errorHandler({c, error, message: "Server error: getting quotes by user"})
@@ -84,7 +84,7 @@ export class QuoteController {
             const user = await this.userService.findUserByProviderId(auth.userId)
             if(!user) throw new NotFoundError("User not found")
             const id = c.req.param("id");
-            await this.removeQuoteUC.execute({ id, userId: user.id })
+            await this.removeQuoteUC.execute({ id, userId: user.id.toString() })
             return successResponse(c, 200, "Quote deleted")
         } catch (error) {
             return errorHandler({c, error, message: "Server error: deleting quote"})
