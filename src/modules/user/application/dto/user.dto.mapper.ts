@@ -4,7 +4,7 @@ import { UserDTO } from "./user.dto";
 export class UserDTOMapper {
   static toDTO(user: User): UserDTO {
     return {
-      id: user.id,
+      id: user.id.toString(),
       providerId: user.providerId.toString(),
       firstName: user.firstName.toString(),
       lastName: user.lastName.toString(),
