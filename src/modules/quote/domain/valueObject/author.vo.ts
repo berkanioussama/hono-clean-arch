@@ -1,3 +1,5 @@
+import { ValidationError } from "../../../../shared/domain/validation-error";
+
 export default class Author {
     private author: string
     private static readonly MIN_LENGTH = 3;
@@ -12,19 +14,19 @@ export default class Author {
         const trimmed = author.trim();
         
         if (!trimmed || trimmed.length === 0) {
-            throw new Error("Author name is required");
+            throw new ValidationError("Author name is required");
         }
         
         if (trimmed.length < Author.MIN_LENGTH) {
-            throw new Error(`Author must be at least ${Author.MIN_LENGTH} characters`);
+            throw new ValidationError(`Author must be at least ${Author.MIN_LENGTH} characters`);
         }
         
         if (trimmed.length > Author.MAX_LENGTH) {
-            throw new Error(`Author cannot exceed ${Author.MAX_LENGTH} characters`);
+            throw new ValidationError(`Author cannot exceed ${Author.MAX_LENGTH} characters`);
         }
         
         if (!Author.AUTHOR_REGEX.test(trimmed)) {
-            throw new Error("Author can only contain letters, spaces, hyphens, and apostrophes");
+            throw new ValidationError("Author can only contain letters, spaces, hyphens, and apostrophes");
         }
         
         return new Author(trimmed);

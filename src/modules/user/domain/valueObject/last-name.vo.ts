@@ -1,3 +1,5 @@
+import { ValidationError } from "../../../../shared/domain/validation-error";
+
 export default class LastName {
     private lastName: string
     private static readonly MIN_LENGTH = 2;
@@ -11,16 +13,16 @@ export default class LastName {
     public static create(lastName: string): LastName {
         const trimmed = lastName.trim();
         if (!trimmed || trimmed.length === 0) {
-            throw new Error("Last name is required");
+            throw new ValidationError("Last name is required");
         }
         if (trimmed.length < LastName.MIN_LENGTH) {
-            throw new Error(`Last name must be at least ${LastName.MIN_LENGTH} characters`);
+            throw new ValidationError(`Last name must be at least ${LastName.MIN_LENGTH} characters`);
         }
         if (trimmed.length > LastName.MAX_LENGTH) {
-            throw new Error(`Last name cannot exceed ${LastName.MAX_LENGTH} characters`);
+            throw new ValidationError(`Last name cannot exceed ${LastName.MAX_LENGTH} characters`);
         }
         if (!LastName.NAME_REGEX.test(trimmed)) {
-            throw new Error("Last name can only contain letters, spaces, hyphens, and apostrophes");
+            throw new ValidationError("Last name can only contain letters, spaces, hyphens, and apostrophes");
         }
         return new LastName(trimmed);
     }

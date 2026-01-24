@@ -1,3 +1,5 @@
+import { ValidationError } from "../../../../shared/domain/validation-error";
+
 export default class Description {
     private readonly description: string;
     private static readonly MAX_LENGTH = 255;
@@ -9,7 +11,7 @@ export default class Description {
     public static create(description: string): Description {
         const trimmed = description.trim();
         if (trimmed.length > Description.MAX_LENGTH) {
-            throw new Error('Description must be less than 255 characters.');
+            throw new ValidationError('Description must be less than 255 characters.');
         }
         return new Description(trimmed);
     }

@@ -1,3 +1,5 @@
+import { ValidationError } from "../../../../shared/domain/validation-error";
+
 export default class Email {
     private emailAddress: string
     private static readonly MAX_LENGTH = 255;
@@ -10,7 +12,7 @@ export default class Email {
     public static create(emailAddress: string): Email {
         const trimmed = emailAddress.trim().toLowerCase()
         if (!trimmed || !trimmed.match(Email.emailRegex)) {
-            throw new Error("Invalid email address.");
+            throw new ValidationError("Invalid email address.");
         }
         return new Email(trimmed);
     }
