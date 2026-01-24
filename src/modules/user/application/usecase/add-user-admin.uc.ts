@@ -8,24 +8,24 @@ export class AddUserAdminUC {
   constructor(private userRepo: IUserRepo) {}
 
   async execute(input: AddUserDTO): Promise<UserDTO> {
+    const providerIdVO = ProviderId.create(input.providerId)
+    const emailVO = Email.create(input.email)
 
-    const existingUser = await this.userRepo.findByProviderId(input.providerId)
+    const existingUser = await this.userRepo.findByProviderId(providerIdVO)
     if (existingUser) throw new Error('User already exists')
 
-    const existingUserByEmail = await this.userRepo.findByEmail(input.email)
+    const existingUserByEmail = await this.userRepo.findByEmail(emailVO)
     if (existingUserByEmail) throw new Error('User already exists')
 
-    const providerId = ProviderId.create(input.providerId)
-    const email = Email.create(input.email)
     const firstName = FirstName.create(input.firstName)
     const lastName = LastName.create(input.lastName)
     const image = ImageUrl.create(input.image)
 
     const user = User.create({
-      providerId: providerId,
+      providerId: providerIdVO,
       firstName: firstName,
       lastName: lastName,
-      email: email,
+      email: emailVO,
       image: image,
     });
 

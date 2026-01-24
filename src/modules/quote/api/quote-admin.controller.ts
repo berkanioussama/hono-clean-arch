@@ -48,7 +48,7 @@ export class QuoteAdminController {
         try {
             const id = c.req.param("id");
             await this.removeQuoteAdminUC.execute(id)
-            return successResponse(c, 200, "Quote deleted")
+            return successResponse(c, 200)
         } catch (error) {
             return errorHandler({c, error, message: "Server error: deleting quote"})
         }

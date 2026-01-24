@@ -5,10 +5,11 @@ import { EditQuoteUC } from "../application/usecase/edit-quote.uc";
 import { FindQuoteByIdUC } from "../application/usecase/find-quote-by-id.uc";
 import { FindQuotesByUserIdUC } from "../application/usecase/find-quotes-by-user-id.uc";
 import { RemoveQuoteUC } from "../application/usecase/remove-quote.uc";
-import { successResponse, errorResponse } from "../../../shared/api/utils/api-response";
+import { successResponse } from "../../../shared/api/utils/api-response";
 import { errorHandler } from "../../../shared/api/utils/error-handler";
 import { AddQuoteSchema, EditQuoteSchema } from "./quote.validator";
 import { UserService } from "../../user/application/service/user.service";
+import { ValidationError, NotFoundError, UnauthorizedError } from "../../../shared/domain/errors";
 
 export class QuoteController {
     constructor(
@@ -23,11 +24,11 @@ export class QuoteController {
     async addQuote(c: Context) {
         try {
             const auth = await getAuth(c)
-            if(!auth || !auth.userId) return errorResponse(c, 401, "Unauthorized, not connected")
+            if(!auth || !auth.userId) throw new UnauthorizedError ("Unauthorized, not connected")
             const user = await this.userService.findUserByProviderId(auth.userId)
-            if(!user) return errorResponse(c, 404, "User not found")
+            if(!user) throw new NotFoundError("User not found")
             const body = AddQuoteSchema.safeParse(await c.req.json())
-            if(!body.success) return errorResponse(c, 400, "Invalid request data")
+            if(!body.success) throw new ValidationError("Invalid request data")
             const quote = await this.addQuoteUC.execute({userId: user.id, ...body.data})
             return successResponse(c, 201, quote)
         } catch (error) {
@@ -38,12 +39,12 @@ export class QuoteController {
     async editQuote(c: Context) {
         try {
             const auth = await getAuth(c)
-            if(!auth || !auth.userId) return errorResponse(c, 401, "Unauthorized, not connected")
+            if(!auth || !auth.userId) throw new UnauthorizedError("Unauthorized, not connected")
             const user = await this.userService.findUserByProviderId(auth.userId)
-            if(!user) return errorResponse(c, 404, "User not found")
+            if(!user) throw new NotFoundError("User not found")
             const id = c.req.param("id");
             const body = EditQuoteSchema.safeParse(await c.req.json())
-            if(!body.success) return errorResponse(c, 400, "Invalid request data")
+            if(!body.success) throw new ValidationError("Invalid request data")
             const quote = await this.editQuoteUC.execute({ id, userId: user.id, ...body.data})
             return successResponse(c, 200, quote)
         } catch (error) {
@@ -54,7 +55,7 @@ export class QuoteController {
     async findQuoteById(c: Context) {
         try {
             const auth = await getAuth(c)
-            if(!auth?.userId) return errorResponse(c, 401, "Unauthorized, not connected")
+            if(!auth?.userId) throw new UnauthorizedError("Unauthorized, not connected")
             const id = c.req.param("id");
             const quote = await this.findQuoteByIdUC.execute({ id, userId: auth.userId })
             return successResponse(c, 200, quote)
@@ -66,9 +67,9 @@ export class QuoteController {
     async findQuotesByUserId(c: Context) {
         try {
             const auth = await getAuth(c)
-            if(!auth?.userId) return errorResponse(c, 401, "Unauthorized, not connected")
+            if(!auth?.userId) throw new UnauthorizedError("Unauthorized, not connected")
             const user = await this.userService.findUserByProviderId(auth.userId)
-            if(!user) return errorResponse(c, 404, "User not found")
+            if(!user) throw new NotFoundError("User not found")
             const quotes = await this.findQuotesByUserIdUC.execute({userId: user.id})
             return successResponse(c, 200, quotes)
         } catch (error) {
@@ -79,9 +80,9 @@ export class QuoteController {
     async removeQuote(c: Context) {
         try {
             const auth = await getAuth(c)
-            if(!auth || !auth.userId) return errorResponse(c, 401, "Unauthorized, not connected")
+            if(!auth || !auth.userId) throw new UnauthorizedError("Unauthorized, not connected")
             const user = await this.userService.findUserByProviderId(auth.userId)
-            if(!user) return errorResponse(c, 404, "User not found")
+            if(!user) throw new NotFoundError("User not found")
             const id = c.req.param("id");
             await this.removeQuoteUC.execute({ id, userId: user.id })
             return successResponse(c, 200, "Quote deleted")

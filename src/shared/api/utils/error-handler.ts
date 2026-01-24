@@ -1,6 +1,6 @@
 import { Context } from "hono";
 import { errorResponse } from "./api-response";
-import { ValidationError } from "../../domain/validation-error";
+import { ValidationError } from "../../domain/errors";
 
 interface ErrorHandlerParams {
     c: Context;

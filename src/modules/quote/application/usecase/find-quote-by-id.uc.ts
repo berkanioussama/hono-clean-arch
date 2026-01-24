@@ -2,6 +2,7 @@ import { IQuoteRepo } from "../../domain/IQuote.repo"
 import { QuoteDTO } from "../dto/quote.dto"
 import { FindQuoteDTO } from "../dto/quote.dto"
 import { QuoteDTOMapper } from "../dto/quote.dto.mapper"
+import { NotFoundError, UnauthorizedError } from "../../../../shared/domain/errors"
 
 export class FindQuoteByIdUC {
     constructor(private quoteRepo: IQuoteRepo) {}
@@ -15,7 +16,7 @@ export class FindQuoteByIdUC {
         if (!quote) return null;
 
         if (quote.userId !== userId) {
-            throw new Error("Unauthorized to access this quote");
+            throw new UnauthorizedError("Unauthorized to access this quote");
         }
 
         return QuoteDTOMapper.toDTO(quote);

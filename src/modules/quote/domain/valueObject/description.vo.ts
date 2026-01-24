@@ -1,4 +1,4 @@
-import { ValidationError } from "../../../../shared/domain/validation-error";
+import { ValidationError } from "../../../../shared/domain/errors";
 
 export default class Description {
     private readonly description: string;

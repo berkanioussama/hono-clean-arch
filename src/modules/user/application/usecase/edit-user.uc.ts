@@ -2,6 +2,7 @@ import { IUserRepo } from "../../domain/IUser.repo";
 import { Email, FirstName, LastName, ImageUrl } from "../../domain/valueObject";
 import { EditUserDTO, UserDTO } from "../dto/user.dto";
 import { UserDTOMapper } from "../dto/user.dto.mapper";
+import { NotFoundError, UnauthorizedError } from "../../../../shared/domain/errors";
 
 export class EditUserUC {
   constructor(private userRepo: IUserRepo) {}
@@ -9,9 +10,9 @@ export class EditUserUC {
   async execute(input: EditUserDTO): Promise<UserDTO> {
     
     const user = await this.userRepo.findById(input.id);
-    if (!user) throw new Error("User not found")
+    if (!user) throw new NotFoundError("User not found")
 
-    if(user.providerId.toString() !== input.providerId) throw new Error("Not authorized to edit this user")
+    if(user.providerId.toString() !== input.providerId) throw new UnauthorizedError("Not authorized to edit this user")
     
     if (input.firstName) {
       const firstName = FirstName.create(input.firstName)
