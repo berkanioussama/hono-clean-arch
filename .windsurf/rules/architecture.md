@@ -6,6 +6,17 @@ trigger: always_on
 
 We are building a backend API using Clean Architecture
 
+---
+
+## Core Folders structure
+
+- **Modules**: contains feature modules (user, quotes, etc.), each module has its own clean architecture layers.
+- **Shared**: contains shared code across modules, with clean architecture layers.
+
+---
+
+## Architecture Layers
+
 - **Api layer**: contains controllers, validators, routes, middlewares, webhooks, depends on Application and Infrastructure layers, external frameworks and libraries.
 - **Application layer**: contains use cases, dto, mappers, services and business rules. depends on Domain layer only, no external frameworks and libraries.
 - **Domain layer**: contains entities, value objects, and repository interfaces, must not depend on any other layer, no external frameworks and libraries.
