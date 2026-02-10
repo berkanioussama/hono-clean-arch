@@ -26,6 +26,7 @@ trigger: always_on
 
 ### API Security
 - Rate limiting on all endpoints
+- avoid common vulnerabilities
 
 ### Environment
 - All secrets in environment variables
