@@ -1,13 +1,13 @@
 import { Context } from "hono";
-import { AddUserAdminUC } from "../application/usecase/add-user-admin.uc";
-import { EditUserAdminUC } from "../application/usecase/edit-user-admin.uc";
-import { FindUserByIdAdminUC } from "../application/usecase/find-user-by-id-admin.uc";
+import { AddUserAdminUC } from "../application/usecase/add-user.admin.uc";
+import { EditUserAdminUC } from "../application/usecase/edit-user.admin.uc";
+import { FindUserByIdAdminUC } from "../application/usecase/find-user-by-id.admin.uc";
 import { RemoveUserAdminUC } from "../application/usecase/remove-user.uc";
-import { FindAllUsersAdminUC } from "../application/usecase/find-all-users-admin.uc";
+import { FindAllUsersAdminUC } from "../application/usecase/find-all-users.admin.uc";
 import { successResponse } from "../../../shared/api/utils/api-response";
 import { errorHandler } from "../../../shared/api/utils/error-handler";
 import { AddUserAdminSchema, EditUserAdminSchema } from "./user.validator";
-import { FindProfileByIdAdminUC } from "../application/usecase/find-profile-by-id-admin.uc";
+import { FindProfileByIdAdminUC } from "../application/usecase/find-profile-by-id.admin.uc";
 import { ValidationError, NotFoundError } from "../../../shared/domain/errors";
 
 export class UserAdminController {

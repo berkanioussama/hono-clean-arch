@@ -1,8 +1,8 @@
 import { Context } from "hono";
-import { FindAllQuotesAdminUC } from "../application/usecase/find-all-quotes-admin.uc";
-import { FindQuoteByIdAdminUC } from "../application/usecase/find-quote-by-id-admin.uc";
-import { FindQuotesByUserIdAdminUC } from "../application/usecase/find-quotes-by-user-id-admin.uc";
-import { RemoveQuoteAdminUC } from "../application/usecase/remove-quote-admin.uc";
+import { FindAllQuotesAdminUC } from "../application/usecase/find-all-quotes.admin.uc";
+import { FindQuoteByIdAdminUC } from "../application/usecase/find-quote-by-id.admin.uc";
+import { FindQuotesByUserIdAdminUC } from "../application/usecase/find-quotes-by-user-id.admin.uc";
+import { RemoveQuoteAdminUC } from "../application/usecase/remove-quote.admin.uc";
 import { successResponse } from "../../../shared/api/utils/api-response";
 import { errorHandler } from "../../../shared/api/utils/error-handler";
 

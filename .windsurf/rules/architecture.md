@@ -15,10 +15,13 @@ We are building a backend API using Clean Architecture
 
 ## Technology Stack
 
-- **Backend**: Bun v1.3 + Hono v4 + TypeScript v5
-- **Database**: Neon (PostgreSQL), Drizzle ORM v0.45
-- **Auth**: Clerk v6
+- **Runtime**: Bun v1.3
+- **Framework**: Hono v4 + TypeScript v5
+- **ORM**: Drizzle ORM v0.45
+- **Database**: Neon (PostgreSQL)
+- **Auth**: Clerk v3
 - **Validation**: Zod v4
+- **Other**: svix
 - **Hosting / Deployment**: Vercel
 
 ---

@@ -28,4 +28,9 @@ src/
 ├── index.ts
 └── .env
 
+## Modules:
+- user
+- quote
+
+## Assumptions:
 Assume I’ll have multiple modules later

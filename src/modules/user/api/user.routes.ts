@@ -1,15 +1,15 @@
 import { Hono } from "hono";
 import { UserRepoImpl } from "../infrastructure/user.repo.impl";
-import { AddUserAdminUC } from "../application/usecase/add-user-admin.uc";
-import { EditUserAdminUC } from "../application/usecase/edit-user-admin.uc";
+import { AddUserAdminUC } from "../application/usecase/add-user.admin.uc";
+import { EditUserAdminUC } from "../application/usecase/edit-user.admin.uc";
 import { EditUserUC } from "../application/usecase/edit-user.uc";
 import { RemoveUserAdminUC } from "../application/usecase/remove-user.uc";
-import { FindUserByIdAdminUC } from "../application/usecase/find-user-by-id-admin.uc";
-import { FindAllUsersAdminUC } from "../application/usecase/find-all-users-admin.uc";
+import { FindUserByIdAdminUC } from "../application/usecase/find-user-by-id.admin.uc";
+import { FindAllUsersAdminUC } from "../application/usecase/find-all-users.admin.uc";
 import { FindUserByProviderIdUC } from "../application/usecase/find-user-by-provider-id.uc";
-import { FindProfileByIdAdminUC } from "../application/usecase/find-profile-by-id-admin.uc";
+import { FindProfileByIdAdminUC } from "../application/usecase/find-profile-by-id.admin.uc";
 import { UserController } from "./user.controller";
-import { UserAdminController } from "./user-admin.controller";
+import { UserAdminController } from "./user.admin.controller";
 import { requireAdminAuth } from "../../../shared/api/middlewares/auth.middleware";
 import { AuthService } from "../application/service/auth.service";
 
