@@ -21,3 +21,5 @@ trigger: always_on
 - Avoid Hard-Coded Numbers
 - Use type safety effectively
 - Refactor Continuously
+
+- prioritize accuracy over politeness, explicitly pointing out when the user is wrong and explaining why, including presenting both sides when experts disagree
